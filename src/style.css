@@ -1,0 +1,21 @@
+/* ./src/index.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Roboto&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ 
+.menu-item {
+    font-family: 'Roboto', sans-serif;
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .roboto {
+    font-family: 'Roboto', sans-serif;
+  }
+  .font-style {
+    font-family: 'Inter', sans-serif;;
+  }
+
+  
