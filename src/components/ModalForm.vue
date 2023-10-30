@@ -1,98 +1,106 @@
-
 <script setup>
-import { ref, reactive, computed } from "vue";
-import { formatCamelCaseToWords ,isDateType,isSelectField,isTextareaField} from "../data";
+import { ref, computed, defineProps } from "vue";
 import { useTabsStore } from "../stores/expenseStore";
+import { formatCamelCaseToWords } from "../data";
 const tabsStore = useTabsStore();
-const formData = reactive({});
-function saveFormData() {
-  // Create a new object with reactive properties
-  const newEntry = ref({});
-  // Assign values from formData to the reactive newEntry object
-  for (const column of tabsStore.Columns) {
-    // Skip the 'id' column
-    if (column !== "id") {
-      newEntry.value[column] = formData[column];
-    }
-  }
-  // Generate a random id using timestamp and a random number
-  newEntry.value.id = Date.now() + Math.floor(Math.random() * 1000);
-
-  // Add the new object to the appropriate data array based on the selected tab
-  const selectedTab = tabsStore.selectedTab;
-
-  tabsStore.tabsData[selectedTab].push(newEntry.value);
-  tabsStore.isModalVisible = false;
+const formData = ref({});
+const props = defineProps({
+  columns: Array,
+  pageType: String,
+});
+function submitForm() {
+  // Clear form data after submission
+  console.log(formData.value)
+  formData.value = {};
 }
 
-const formFields = computed(() => {
-  const categoryColumns = {
-    expencesCategory: ["CategoryName", "description"],
-    allExpences: ["date", "category", "party", "amount", "details"],
-    ownerPickup: ["date", "owner", "amount", "details"],
-    paymentSent: ["date", "party", "amount", "details"],
-    paymentReceived: ["date", "party", "amount", "details"],
-    party: ["name", "phone", "details"],
-  };
-  const fields = tabsStore.Columns.map((column) => {
-    const isRequiredField = [
-      "category",
-      "party",
-      "owner",
-      "name",
-      "phone",
-      "date",
-      "amount","CategoryName",
-    ].includes(column);
-    formData[column] = isRequiredField ? "" : null; // Set required fields to empty string, others to null
-
-    return {
-      name: column,
-      required: isRequiredField,
-    };
-  }).filter((field) =>
-    categoryColumns[tabsStore.selectedTab]?.includes(field.name)
-  );
-
-  return fields;
+const columnsToDisplay = computed(() => {
+  switch (props.pageType) {
+    case "All Expenses":
+      return [
+        { name: "date", required: true, label: "Date" },
+        { name: "category", required: true, label: "Expenses Category" },
+        { name: "party", required: true, label: "Party" },
+        { name: "amount", required: true, label: "Amount" },
+        { name: "details", required: false, label: "Details" },
+        
+      ];
+    case "Expenses Category":
+      return [
+        { name: "categoryName", required: true, label: "Category Name" },
+        { name: "description", required: false, label: "Description" }
+      ];
+    case "Owner Pickup":
+      return [
+        { name: "date", required: true, label: "Date" },
+        { name: "owner", required: true, label: "Owner" },
+        { name: "amount", required: true, label: "Amount" },
+        { name: "details", required: false, label: "Details" }
+      ];
+    case "Payment Sent":
+    case "Payment Received":
+      return [
+        { name: "date", required: true, label: "Date" },
+        { name: "party", required: true, label: "Party" },
+        { name: "amount", required: true, label: "Amount" },
+        { name: "details", required: false, label: "Details" }
+      ];
+    case "Party":
+      return [
+        { name: "name", required: true, label: "Name" },
+        { name: "phone", required: true, label: "Phone" },
+        { name: "details", required: false, label: "Details" }
+      ];
+    default:
+      return [];
+  }
 });
+
 </script>
 <template>
-  <form @submit.prevent="saveFormData" class="px-3 pt-6 md:px-8 lg:px-14">
-    <div v-for="field in formFields" :key="field.name">
-      <label class="block roboto text-[12px] capitalize"
-        > {{ formatCamelCaseToWords(field.name) }}<span v-if="field.required" class="pl-1 text-red-700">*</span></label
+  <form @submit.prevent="submitForm" class="px-3 pt-6 md:px-8 lg:px-14">
+    <div v-for="(col, index) in columnsToDisplay" :key="index" class="mb-4">
+      <label :for="col.name" class="capitalize text-sm">{{ col.label}}<span v-if="col.required" class="text-red-700 ml-1">*</span></label>
+      <template v-if="col.name === 'details' || col.name === 'description'">
+        <textarea
+          v-model="formData[col.name]"
+          :id="col"
+          :required="col.required"
+          class="bg-[#F3F6F9] rounded-[4px] text-black w-full focus:outline-none py-3 mt-3 mb-4 form-font resize-none  px-2"
+        >
+A Few Words...</textarea
+        >
+      </template>
+      <template v-else-if="col === 'date'">
+        <input
+          v-model="formData[col.name]"
+          :required="col.required"
+          :id="col"
+          type="date"
+          class="bg-[#F3F6F9] rounded-[4px] w-full focus:outline-none py-3 mt-3 mb-4 form-font px-2"
+        />
+      </template>
+      <template
+        v-else-if="col === 'category' || col === 'party' || col === 'owner'"
       >
-      <textarea
-        v-if="isTextareaField(field.name)"
-        v-model="formData[field.name]"
-        class="bg-[#F3F6F9] rounded-[4px] text-black w-full focus:outline-none py-3 mt-3 mb-4 form-font resize-none px-2"
-        
-      >A Few Words ...</textarea>
-      <select
-        v-else-if="isSelectField(field.name)"
-        v-model="formData[field.name]"
-        class="bg-[#F3F6F9] rounded-[4px] w-full focus:outline-none py-3 mt-3 mb-4 form-font px-2"
-        :required="field.required"
-      >
-      <option value="field.name" disabled>{{ field.name }}</option>
-        <!-- options here -->
-        <option :value="field.name">{{ field.name }}</option>
-      </select>
-      <input
-        v-else-if="isDateType(field.name)"
-        type="date"
-        v-model="formData[field.name]"
-        class="bg-[#F3F6F9] rounded-[4px] w-full focus:outline-none py-3 mt-3 mb-4 form-font px-2"
-        :required="field.required"
-      />
-      <input
-        v-else
-        type="text"
-        v-model="formData[field.name]"
-        class="bg-[#F3F6F9] rounded-[4px] w-full focus:outline-none py-3 mt-3 mb-4 form-font px-2"
-        :required="field.required"
-      />
+        <select
+          v-model="formData[col.name]"
+          :id="col"
+          :required="col.required"
+          class="bg-[#F3F6F9] rounded-[4px] w-full focus:outline-none py-3 mt-3 mb-4 form-font px-2"
+        >
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+        </select>
+      </template>
+      <template v-else>
+        <input
+          v-model="formData[col.name]"
+          :id="col"
+          type="text"
+          class="bg-[#F3F6F9] rounded-[4px] w-full focus:outline-none py-3 mt-3 mb-4 form-font px-2"
+        />
+      </template>
     </div>
     <button
       type="submit"

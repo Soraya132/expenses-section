@@ -1,17 +1,20 @@
 <script setup>
 import {Navbar,Sidebar} from "./components/index"
-import Home from "./views/Home.vue"
+import {RouterLink,RouterView} from "vue-router"
 </script>
 <template>
-  <div class="w-full overflow-x-hidden flex flex-col relative">
-    <Navbar />
-    <div class="flex flex-col lg:flex-row gap-3 lg:gap-0 ">
-      <Sidebar />
-      <main class="px-7 w-full">
-        <Home/>
+  <div id="nav" class="relative">
+  <div class="w-full overflow-x-hidden flex flex-col ">
+    <Navbar/>
+    <div class="flex">
+      <div class="absolute"><Sidebar/></div>
+      <main class="px-7 w-full mt-28">
+        <RouterView/>
       </main>
     </div>
   </div>
+</div>
 </template>
-<style scoped></style>
+<style>
+</style>  
 

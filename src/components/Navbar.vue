@@ -6,7 +6,7 @@ const tabsStore = useTabsStore();
 <template>
   <div>
     <nav
-      class="flex justify-between items-center shadow h-[80px] px-1 md:px-[30px]"
+      class="flex justify-between items-center shadow h-[80px] px-1 md:px-[30px] fixed z-10 w-full bg-white"
     >
       <!-- Left Section (Logo, Menu Icon) -->
       <ul class="flex items-center space-x-4">
@@ -34,27 +34,6 @@ const tabsStore = useTabsStore();
         </li>
       </ul>
     </nav>
-    <div
-      class="absolute shadow-md bg-white bottom-[0px] top-[84px] left-0 lg:left-[114px] transition-all duration-1000 ease-in-out overflow-hidden"
-      :class="{
-        'w-0 ': !tabsStore.getIsMenuOpen,
-        'w-[300px] ': tabsStore.getIsMenuOpen,
-      }"
-    >
-      <ul class="pl-6 mt-7">
-        <li
-          v-for="(menuItem, index) in menuItems"
-          :key="index"
-          class="flex items-center gap-2 my-6 cursor-pointer"
-          @click="tabsStore.setSelectedTab(menuItem.clickFunction)"
-        >
-          <img :src="menuItem.iconSrc" alt="icon" class="w-6 h-6 mr-2" /><span
-            class="menu-item text-[12px] 2xl:text-xl whitespace-nowrap"
-            >{{ menuItem.name }}</span
-          >
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 <style scoped>

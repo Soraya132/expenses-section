@@ -1,12 +1,17 @@
 <script setup>
 import { useTabsStore } from "../stores/expenseStore";
-import { computed} from "vue";
+import {computed} from "vue";
 import { ModalForm } from ".";
 const tabsStore = useTabsStore();
+const props = defineProps({
+  columns: Array,
+  title:String,
+});
+
 const modalHeaderText = computed(() => {
-  if (tabsStore.selectedTab === "paymentSent") {
+  if (props.title=== "Payment Sent") {
     return "Create Payment Sent";
-  } else if (tabsStore.selectedTab === "paymentReceived") {
+  } else if (props.title === "Payment Received") {
     return "Create Payment Received";
   } else {
     return "Create";
@@ -17,20 +22,20 @@ const modalHeaderText = computed(() => {
   <transition name="fade">
     <div
       v-if="tabsStore.isModalVisible"
-      class="absolute w-full bg-black bg-opacity-30 top-0 left-0 bottom-0 px-2 sm:px-8"
+      class="absolute w-full bg-black  bg-opacity-30 top-0 left-0 h-full lg:min-h-[1070px] px-2 sm:px-8 z-50"
     >
     <transition class="fade-content">
       <div
         class="bg-white flex flex-col w-[95%] lg:w-[50%] h-content rounded-[16px] my-10 py-10 mx-auto modal-content-appear"
       >
-        <header class="flex justify-between border-b px-3 md:px-8 lg:px-14">
+        <header class="flex justify-between items-center border-b px-3 md:px-8 lg:px-14">
           <div class="text-black form-header pb-3 roboto text-2xl font-[400]">{{ modalHeaderText }}</div>
           <div @click="tabsStore.closeModal">
             <img src="/src/assets/close.svg" alt="close icons" />
           </div>
         </header>
         <div>
-          <ModalForm/>
+          <ModalForm :columns="columns" :pageType="title"/>
         </div>
       </div>
     </transition> 

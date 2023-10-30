@@ -2,6 +2,7 @@
 import { useTabsStore } from "../stores/expenseStore";
 import { formatCamelCaseToWords } from "../data";
 const tabsStore = useTabsStore();
+defineProps(["columns","filteredData"])
 </script>
 <template>
   <div class="overflow-x-auto mt-20">
@@ -12,7 +13,7 @@ const tabsStore = useTabsStore();
             <div class="w-[22px] h-[22px] rounded-[4px] bg-[#F3F6F9]"></div>
           </th>
           <th
-            v-for="(col, index) in tabsStore.Columns"
+            v-for="(col, index) in columns"
             :key="index"
             class="px-6 py-3"
             scope="col"
@@ -24,7 +25,7 @@ const tabsStore = useTabsStore();
       </thead>
       <tbody>
         <tr
-          v-for="item in tabsStore.rowData"
+          v-for="item in filteredData"
           :key="item.id"
           class="border-b-2 border-dotted"
         >
@@ -34,13 +35,13 @@ const tabsStore = useTabsStore();
           >
             <div class="w-[22px] h-[22px] rounded-[4px] bg-[#F3F6F9]"></div>
           </th>
-          <td v-for="(col, index) in tabsStore.Columns" :key="index + '1'" class="px-6 py-4">
+          <td v-for="(col, index) in columns" :key="index + '1'" class="px-6 py-4">
             {{ item[col] }}
           </td>
 
           <td class=" pl-6 py-4 text-right flex justify-end gap-2">
             <button
-            @click="tabsStore.deleteRow(item.id)"
+         
               class="bg-red-500 flex items-center justify-center w-[34px] h-[34px] rounded-[4px] "
             >
               <img src="/src/assets/Vector (6).svg" alt="icons" />

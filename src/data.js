@@ -1,4 +1,4 @@
-export const allExpences = [
+export const allExpenses = [
     {
       id: 1,
       date: '2023-10-05',
@@ -49,7 +49,7 @@ export const allExpences = [
       category: 'Ads',
       details: 'Facebook Ads, Banner Ads, and so on.'
     }
-  ];
+ ];
 
   export const ownerPickup = [
     {
@@ -220,7 +220,7 @@ export const allExpences = [
       details: 'Flight partner in Saudi Arabia.'
     }
   ];
-  export const expencesCategory= [
+  export const expensesCategory= [
     {
       id: 1,
       CategoryName: 'Food',
@@ -247,15 +247,13 @@ export const allExpences = [
       description: 'Facebook Ads, Banner Ads, and so on.'
     }
   ];
-
-
   export const menuItems = [
-    { name: "All Expenses", iconSrc: "/src/assets/dollar.svg",clickFunction:"allExpences" },
-    { name: "Payment Sent", iconSrc: "/src/assets/payment-sent.svg" ,clickFunction:"paymentSent" },
-    { name: "Payment Received", iconSrc: "/src/assets/invoice.svg",clickFunction:"paymentReceived"  },
-    { name: "Owner Pickup", iconSrc: "/src/assets/payment-sent.svg" ,clickFunction:"ownerPickup" },
-    { name: "Expense Category", iconSrc: "/src/assets/invoice.svg",clickFunction:"expencesCategory"  },
-    { name: "Party", iconSrc: "/src/assets/invoice.svg",clickFunction:"party"  },
+    { name: "All Expenses", iconSrc: "/src/assets/dollar.svg" },
+    { name: "Payment Sent", iconSrc: "/src/assets/payment-sent.svg" },
+    { name: "Payment Received", iconSrc: "/src/assets/invoice.svg",},
+    { name: "Owner Pickup", iconSrc: "/src/assets/payment-sent.svg"  },
+    { name: "Expense Category", iconSrc: "/src/assets/invoice.svg",},
+    { name: "Party", iconSrc: "/src/assets/invoice.svg"},
   ];
   export const rightIcons = [
     {
@@ -292,37 +290,26 @@ export const allExpences = [
     },
   ];
   export const imageObjects = [
-    { name: "Dashboard", src: "/src/assets/house.svg" },
-    { name: "Flight Group", src: "/src/assets/flight.svg" },
-    { name: "Finance", src: "/src/assets/bank.svg" },
-    { name: "Services", src: "/src/assets/office-bag.svg" },
-    { name: "Expenses", src: "/src/assets/dollar.svg" },
-    { name: "People", src: "/src/assets/people.svg" },
-    { name: "HRM", src: "/src/assets/hrm.svg" },
-    { name: "User management", src: "/src/assets/users.svg" },
-    { name: "Loan", src: "/src/assets/money.svg" },
-    { name: "Advance payment", src: "/src/assets/invoice.svg" },
-    { name: "Report", src: "/src/assets/report.png" },
-    { name: "Setting", src: "/src/assets/setting.svg" },
+    { name: "Dashboard", src: "/src/assets/house.svg",route:"/dashboard", submenu: ['Dashboard Category']},
+    { name: "Flight Group", src: "/src/assets/flight.svg",route:"/FlightGroup", submenu: ['flight group'] },
+    { name: "Finance", src: "/src/assets/bank.svg" ,route:"/Finance", submenu: ['finance']},
+    { name: "Services", src: "/src/assets/office-bag.svg",route:"/services", submenu: ['services'] },
+    { name: "Expenses", src: "/src/assets/dollar.svg" ,route:"/expenses",submenu: ['All Expenses', 'Payment Sent', 'Payment Received', 'Owner Pickup', 'Party', 'Expenses Category'],submenuIcons:[ "/src/assets/dollar.svg",
+    "/src/assets/payment-sent.svg","/src/assets/invoice.svg","/src/assets/payment-sent.svg","/src/assets/invoice.svg","/src/assets/invoice.svg"] },
+    { name: "People", src: "/src/assets/people.svg",route:"/People",submenu: ['people'] },
+    { name: "HRM", src: "/src/assets/hrm.svg" ,route:"/Hrm",submenu: ['HRM']},
+    { name: "User management", src: "/src/assets/users.svg",route:"/userManagement",submenu: ['user management'] },
+    { name: "Loan", src: "/src/assets/money.svg",route:"/loan",route:"/loan",submenu: ['loan'] },
+    { name: "Advance payment", src: "/src/assets/invoice.svg",route:"/advancePayment",submenu: ['advance payment'] },
+    { name: "Report", src: "/src/assets/report.png",route:"/report",submenu: ['report'] },
+    { name: "Setting", src: "/src/assets/setting.svg",route:"/setting",submenu: ['setting']},
   ];
   export function formatCamelCaseToWords(camelCaseString) {
     // Use regular expression to add spaces between camelCase words
     return camelCaseString.replace(/([a-z])([A-Z])/g, '$1 $2');
   }
 
- export function isTextareaField(column) {
-    return ["description", "details"].includes(column);
-  }
-  
-  // Function to check if a field is a select type
-  export function isSelectField(column) {
-    return ["category", "party", "owner"].includes(column);
-  }
-  // for type number
-  export function isDateType(column) {
-    return ["date"].includes(column);
-  }
-  
+
   
   
   
