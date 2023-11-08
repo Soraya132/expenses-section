@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref,reactive } from "vue";
+import { ref} from "vue";
 export const useTabsStore = defineStore("tabs", {
   state: () => ({
     isMenuOpen : ref(false),
@@ -30,7 +30,7 @@ export const useTabsStore = defineStore("tabs", {
       return this.isMenuOpen; // Expose isMenuOpen as a getter
     },
     getIsSubMenuOpen() {
-      return this.isSubMenuOpen; // Expose isMenuOpen as a getter
+      return this.isSubMenuOpen; // Expose isSubMenuOpen as a getter
     },
   },
 });

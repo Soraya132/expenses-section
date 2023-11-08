@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Dashboard from '../views/Dashboard.vue'
-import ExpensesSubRoutes from "../views/ExpensesSubRoutes.vue"
+import { AllExpenses, Dashboard,PaymentReceived,PaymentSent,Party,OwnerPickup,ExpensesCategory } from '../views/index.js'
+
+
 const routes = [
   {
     path: '/',
@@ -8,10 +9,34 @@ const routes = [
     component: Dashboard
   },
   {
-    path: '/expenses/:category',
-    name:'expenses', // Dynamic parameter ":id"
-    component: ExpensesSubRoutes,
-    props: true // Pass route params as props to the component
+    path: '/expense/allExpenses',
+    name: 'allExpenses',
+    component: AllExpenses
+  },
+  {
+    path: '/expense/PaymentSent',
+    name: 'paymentSent',
+    component: PaymentSent
+  },
+  {
+    path: '/expense/paymentReceived',
+    name: 'paymentReceived',
+    component: PaymentReceived
+  },
+  {
+    path: '/expense/party',
+    name: 'party',
+    component: Party
+  },
+  {
+    path: '/expense/ownerPickup',
+    name: 'ownerPickup',
+    component: OwnerPickup
+  },
+  {
+    path: '/expense/expensesCategory',
+    name: 'expensesCategory',
+    component: ExpensesCategory
   },
 ]
 const router = createRouter({

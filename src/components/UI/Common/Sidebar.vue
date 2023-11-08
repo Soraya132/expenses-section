@@ -1,6 +1,6 @@
 <script setup>
-import { imageObjects } from "../data";
-import { useTabsStore } from "../stores/expenseStore";
+import { imageObjects } from "../../../data";
+import { useTabsStore } from "../../../stores/expenseStore";
 import { RouterLink } from "vue-router";
 import SubmenuItems from "./SubmenuItems.vue";
 const tabsStore = useTabsStore();
@@ -63,7 +63,17 @@ const tabsStore = useTabsStore();
   </aside>
 </template>
 
-<!-- :class="{
-  'w-0': !tabsStore.isSubMenuOpen,
-'w-[500px]': tabsStore.isSubMenuOpen,
-}" -->
+<!-- if (category === 'allExpenses') {
+  return ['date', 'reference', 'addedBy', 'party', 'amount', 'category', 'details'];
+} else if (category === 'ownerPickup') {
+  return ['date', 'reference', 'owner', 'amount', 'details'];
+} else if (category === 'paymentSent' || category === 'paymentReceived') {
+  return ['date', 'reference', 'addedBy', 'party', 'amount', 'details'];
+} else if (category === 'party') {
+  return ['name', 'phone', 'paid', 'spend', 'receivable', 'payable', 'details'];
+} else if (category === 'expensesCategory') {
+  return ['CategoryName', 'description'];
+}
+
+return [];
+}); -->

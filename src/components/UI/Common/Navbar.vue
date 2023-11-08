@@ -1,6 +1,6 @@
 <script setup>
-import { useTabsStore } from "../stores/expenseStore";
-import { menuItems, leftIcons, rightIcons } from "../data";
+import { useTabsStore } from "../../../stores/expenseStore";
+import { menuItems, leftIcons, rightIcons } from "../../../data";
 const tabsStore = useTabsStore();
 </script>
 <template>

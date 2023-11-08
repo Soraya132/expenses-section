@@ -1,5 +1,5 @@
 <script setup>
-import { useTabsStore } from '../stores/expenseStore';
+import { useTabsStore } from '../../../stores/expenseStore';
 const tabsStore = useTabsStore()
 
 </script>
